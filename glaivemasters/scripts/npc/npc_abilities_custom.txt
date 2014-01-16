@@ -15,70 +15,51 @@
 		"AbilityTextureName"			"silencer_glaives_of_wisdom"
 		"AnimationIgnoresModelScale"	"1"
 		"MaxLevel"                      "1"
-		"BaseClass"						"shredder_timber_chain"
-		"AbilityDamage"					"10"
+		"BaseClass"						"ability_datadriven"
 		
 		// Ability Details
 		// ------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint" 				"0.5"
 		"AbilityCastRange" 				"100000"
+		"AbilityMoveSpeed"				"50"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0"
+		"AbilityCooldown"				"4.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
 		
-		"AbilitySpecial"
+		"precache"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"chain_radius"		"90"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"range"				"850"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage_radius"		"225"
-			}
-			"04"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"1600"
-			}
-			"05"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"100"
-			}
+			"particlefile" 				"particles/units/heroes/hero_silencer.pcf"
 		}
 		
 		"OnSpellStart"
-		{
+		{				
+			"SpawnUnit"
+			{
+				"UnitName" 				"npc_dota_creature_glaive"
+				"UnitCount" 			"1"
+				"SpawnRadius" 			"25"
+				"Target"				"CASTER"
+				"OnSpawn"
+				{					
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/glaives.lua"
+						"Function"				"glaiveOnSpellStart"
+						"Target"				"POINT"
+					}
+				}
+			}
+			
 			"FireSound"
 			{
-					"EffectName"		"Hero_Silencer.GlaivesOfWisdom"
+				"EffectName"		"Hero_Silencer.GlaivesOfWisdom"
 			}
 		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"                                	"false"
-
-			"RunScript"
-			{
-				"Target"				"TARGET"
-				"ScriptFile"			"scripts/vscripts/glaives.lua"
-				"Function"				"glaiveOnProjectileUnitHit"
-			}
-		}	
 	}
 	
 	"glaivemasters_plus_radius"
@@ -89,13 +70,8 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE "
 		"AbilityTextureName"			"attribute_bonus"
-		"MaxLevel"                      "10"
+		"MaxLevel"                      "8"
 		"BaseClass"						"ability_datadriven"
-		
-		"OnUpgrade"
-		{
-			// Do something
-		}
 	}
 	
 	"glaivemasters_plus_damage"
@@ -106,13 +82,8 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE "
 		"AbilityTextureName"			"attr_damage"
-		"MaxLevel"                      "10"
+		"MaxLevel"                      "8"
 		"BaseClass"						"ability_datadriven"
-		
-		"OnUpgrade"
-		{
-			// Do something
-		}
 	
 	}
 	
@@ -124,13 +95,8 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE "
 		"AbilityTextureName"			"luna_moon_glaive"
-		"MaxLevel"                      "10"
+		"MaxLevel"                      "8"
 		"BaseClass"						"ability_datadriven"
-		
-		"OnUpgrade"
-		{
-			// Do something
-		}
 	
 	}
 	"glaivemasters_plus_speed"
@@ -141,13 +107,66 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE "
 		"AbilityTextureName"			"kobold_taskmaster_speed_aura"
-		"MaxLevel"                      "10"
-		"BaseClass"						"ability_datadriven"
-		
-		"OnUpgrade"
-		{
-			// Do something
-		}
+		"MaxLevel"                      "8"
+		"BaseClass"						"ability_datadriven"	
+	}
 	
+	"glaive_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityName"					"glaive_damage"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityTextureName"			"lina_laguna_blade"
+		"MaxLevel"                      "8"
+		"BaseClass"						"lina_laguna_blade"
+		
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.1"
+		"AbilityCastRange"				"500"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.2"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+			
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// Modifier just delays damage
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"300 350 400 450 500 550 600 650"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"300 350 400 450 500 550 600 650"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"0 0 0 0 0 0 0 0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_delay"				"0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1"
+			}
+		}
 	}
 }
